@@ -8,11 +8,11 @@ services:
       dockerfile: Dockerfile
       args:
         - USERNAME=${USUARIO:-root}
-        - USER_UID=${USUARIO_UID:- 0}
-        - USER_GID=${USUARIO_GID:- 0}
+        - USER_UID=${USUARIO_UID:-1000}
+        - USER_GID=${USUARIO_GID:-1000}
     container_name: containerphp
 
-    user: ${USUARIO_UID}:${USUARIO_GID}
+    user: ${USUARIO:-app}:${USUARIO:-app}
 
     #Crear un volumen para almacenar mi página web
     volumes:
@@ -35,7 +35,7 @@ services:
   mariadb:
     image: mariadb:latest
     volumes:
-      - mariadb_data:/var/lib/mysql:Z
+      - mariadb_data:/var/lib/mysql
     ports:
       - 33010:3306
     networks:
